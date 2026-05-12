@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Nzambe Coiffure</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <span class="logo-n">N</span><span class="logo-z">zambe</span>
+    </div>
+    <nav class="snav">
+      <a href="#" class="snav-link active">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Rendez-vous
+        <span class="snav-badge" id="pendingBadge"></span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sadmin-info">
+        <div class="sadmin-avatar">A</div>
+        Admin
+      </div>
+      <button class="btn-logout" id="logoutBtn" title="Déconnexion">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <main class="dash-main">
+    <header class="dash-header">
+      <div>
+        <h1 class="dash-title">Rendez-vous</h1>
+        <span class="dash-date" id="dashDate"></span>
+      </div>
+      <button class="btn-refresh" id="refreshBtn" title="Actualiser">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+      </button>
+    </header>
+
+    <div class="dash-stats">
+      <div class="dstat">
+        <span class="dstat-n" id="totalCount">0</span>
+        <span class="dstat-l">Total</span>
+      </div>
+      <div class="dstat">
+        <span class="dstat-n" id="pendingCount">0</span>
+        <span class="dstat-l">En attente</span>
+      </div>
+      <div class="dstat">
+        <span class="dstat-n" id="confirmedCount">0</span>
+        <span class="dstat-l">Confirmés</span>
+      </div>
+      <div class="dstat">
+        <span class="dstat-n" id="todayCount">0</span>
+        <span class="dstat-l">Aujourd'hui</span>
+      </div>
+    </div>
+
+    <div class="table-toolbar">
+      <div class="search-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" id="searchInput" placeholder="Rechercher par nom, email...">
+      </div>
+      <div class="filter-tabs">
+        <button class="ftab active" data-filter="all">Tous</button>
+        <button class="ftab" data-filter="pending">En attente</button>
+        <button class="ftab" data-filter="confirmed">Confirmés</button>
+        <button class="ftab" data-filter="cancelled">Annulés</button>
+      </div>
+    </div>
+
+    <div class="table-wrap" id="apptTable">
+      <table class="atable">
+        <thead>
+          <tr>
+            <th>Statut</th>
+            <th>Client</th>
+            <th>Service</th>
+            <th>Date & Heure</th>
+            <th>Téléphone</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="apptTbody"></tbody>
+      </table>
+    </div>
+
+    <div class="loading-state" id="loadingState">
+      <div class="spinner"></div>
+      Chargement...
+    </div>
+    <div class="empty-state" id="emptyState" hidden>
+      <div style="font-size:3rem">📅</div>
+      <h3>Aucun rendez-vous</h3>
+      <p>Aucun rendez-vous correspondant.</p>
+    </div>
+  </main>
+
+  <!-- Modal détail -->
+  <div class="modal-overlay" id="modalOverlay" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modalName">—</h3>
+        <button class="modal-close" id="modalClose" type="button">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-meta">
+          <span id="modalService"></span>
+          <span id="modalDate"></span>
+          <span id="modalTime"></span>
+          <span id="modalStatus"></span>
+        </div>
+        <div class="modal-info-grid">
+          <div class="mig-item">
+            <span class="mig-label">Email</span>
+            <span id="modalEmail" class="mig-val"></span>
+          </div>
+          <div class="mig-item">
+            <span class="mig-label">Téléphone</span>
+            <span id="modalPhone" class="mig-val"></span>
+          </div>
+        </div>
+        <div class="modal-message" id="modalMessage"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-confirm-modal" id="modalConfirmBtn" type="button">✓ Confirmer</button>
+        <button class="btn-cancel-modal" id="modalCancelBtn" type="button">✕ Annuler RDV</button>
+        <button class="btn-delete-modal" id="modalDeleteBtn" type="button">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+          Supprimer
+        </button>
+        <button class="btn-modal-close-text" id="modalCloseText" type="button">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/dashboard.js" defer></script>
+</body>
+</html>

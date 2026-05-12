@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Nzambe Coiffure</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="auth-page">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <span class="logo-n">N</span><span class="logo-z">zambe</span>
+      </div>
+      <h1 class="auth-title">Administration</h1>
+      <p class="auth-sub">Salon de coiffure africain · Toulouse</p>
+      <div class="auth-error" id="authError" hidden>Identifiants incorrects.</div>
+      <form id="loginForm" novalidate>
+        <div class="fgroup">
+          <label for="username">Identifiant</label>
+          <input type="text" id="username" name="username" placeholder="admin" required autocomplete="username">
+        </div>
+        <div class="fgroup">
+          <label for="password">Mot de passe</label>
+          <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn-login" id="loginBtn">Se connecter</button>
+      </form>
+    </div>
+  </div>
+  <script src="js/login.js" defer></script>
+</body>
+</html>

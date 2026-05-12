@@ -1,0 +1,22 @@
+# robots.txt — Nzambe Coiffure — Salon Afro Toulouse
+
+User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+Disallow: /admin/
+Disallow: /api/
+Disallow: /config/
+Disallow: /controllers/
+Disallow: /models/
+Disallow: /middleware/
+Disallow: /routes/
+Disallow: /scripts/
+
+Sitemap: https://www.nzambe-coiffure.fr/sitemap.xml
+Crawl-delay: 1
